@@ -1,0 +1,132 @@
+
+CREATE TABLE `commandepiecerechange` (
+  `idPiece` int NOT NULL AUTO_INCREMENT,
+  `Fournisseur` varchar(30) NOT NULL,
+  `NCommande` varchar(30) NOT NULL,
+  `PrixUHT` float NOT NULL,
+  `Qte` int NOT NULL,
+  `Service_Concerne` varchar(30) NOT NULL,
+  `Date_Commande` varchar(30) NOT NULL,
+  PRIMARY KEY (`idPiece`)
+);
+
+CREATE TABLE `demandeintexterne` (
+  `idItem` int NOT NULL AUTO_INCREMENT,
+  `TypeAppareil` varchar(30) NOT NULL,
+  `Service` varchar(30) NOT NULL,
+  `Marque` varchar(30) NOT NULL,
+  `Modele` varchar(30) NOT NULL,
+  `Fournisseur` varchar(30) NOT NULL,
+  `NEnregistrement` varchar(30) NOT NULL,
+  `NSerie` varchar(30) NOT NULL,
+  `TypeIntervention` varchar(30) NOT NULL,
+  `ReferenceDemande` varchar(30) NOT NULL,
+  `Date` date NOT NULL,
+  PRIMARY KEY (`idItem`)
+);
+
+INSERT INTO `demandeintexterne` VALUES (1,'eaeaz','efae','faf','faef','erar','ea62e','fazef','efaf','2e26ea','1212-12-12'),(4,'azera','2zze','ze2r6','6ze2r','ze6r26','26ze2r','6zerz','ez6r26','262','1212-12-12');
+
+CREATE TABLE `inventaire` (
+  `idItem` int NOT NULL AUTO_INCREMENT,
+  `Service` varchar(30) NOT NULL,
+  `Designation` varchar(30) NOT NULL,
+  `TypeEquipement` varchar(30) NOT NULL,
+  `Marque` varchar(30) NOT NULL,
+  `Modele` varchar(30) NOT NULL,
+  `Quantite` int NOT NULL,
+  `NSerie` varchar(30) NOT NULL,
+  `NContrat` varchar(30) NOT NULL,
+  PRIMARY KEY (`idItem`)
+);
+
+INSERT INTO `inventaire` VALUES (2,'ezza','16az16','a1ze','a6z','1a61a',616,'2','26a6'),(4,'a','1e5a','ea','5ae','15ea',12,'e5a1','e15z');
+
+CREATE TABLE `maintenance` (
+  `idMain` int NOT NULL AUTO_INCREMENT,
+  `Service` varchar(30) NOT NULL,
+  `Designation` varchar(30) NOT NULL,
+  `Equipement` varchar(30) NOT NULL,
+  `Etat` varchar(10) NOT NULL,
+  `Marque` varchar(20) NOT NULL,
+  `Modele` varchar(20) NOT NULL,
+  `NdeSerie` varchar(30) NOT NULL,
+  `DatePrevu` date NOT NULL,
+  `Date_Intervention` date NOT NULL,
+  `Decalage_Intervention` time NOT NULL,
+  `Duree_Intervention` time NOT NULL,
+  `Montant_Intervention` int NOT NULL,
+  PRIMARY KEY (`idMain`)
+);
+
+INSERT INTO `maintenance` VALUES (2,'z','ea','aez','e','era','z','ea','1212-12-12','1212-12-12','12:12:12','12:12:12',16);
+
+CREATE TABLE `plannification` (
+  `idPlan` int NOT NULL AUTO_INCREMENT,
+  `Marque` varchar(30) NOT NULL,
+  `Modele` varchar(30) NOT NULL,
+  `TypeMaintenance` varchar(30) NOT NULL,
+  `DateMaint` date NOT NULL,
+  `nSerie` varchar(30) NOT NULL,
+  `RefRapport` varchar(30) NOT NULL,
+  PRIMARY KEY (`idPlan`)
+);
+
+INSERT INTO `plannification` VALUES (6,'Siemens','NX','Préventif','1259-12-04','E55R1R','R15Z5Z');
+
+CREATE TABLE `rapport_intervention` (
+  `idItem` int NOT NULL AUTO_INCREMENT,
+  `Service` varchar(30) NOT NULL,
+  `Designation` varchar(30) NOT NULL,
+  `TypeAppareil` varchar(30) NOT NULL,
+  `Marque` varchar(30) NOT NULL,
+  `Modele` varchar(30) NOT NULL,
+  `NInventaire` varchar(30) NOT NULL,
+  `NSerie` varchar(30) NOT NULL,
+  `Date_Intervention` date NOT NULL,
+  `Reference_Rapport` varchar(30) NOT NULL,
+  PRIMARY KEY (`idItem`)
+);
+
+INSERT INTO `rapport_intervention` VALUES (1,'az','er1a5','1r5a','1er5a','15era','zera15','a5er1a5','1212-12-12','12era'),(3,'aaaaaaaa','eraz','era','ra','zer','zaer','zera','1212-12-12','erz'),(4,'aera','azer','azer','aezr','zer','aera','aezr','1222-02-02','azer');
+
+CREATE TABLE `receptionequipement` (
+  `idItem` int NOT NULL AUTO_INCREMENT,
+  `Service` varchar(30) NOT NULL,
+  `Fournisseur` varchar(30) NOT NULL,
+  `Fabricant` varchar(30) NOT NULL,
+  `TypeApp` varchar(30) NOT NULL,
+  `Designation` varchar(30) NOT NULL,
+  `NSerie` varchar(30) NOT NULL,
+  `DateRecep` date NOT NULL,
+  `MotifRecep` varchar(30) NOT NULL,
+  `AspectColis` varchar(30) NOT NULL,
+  `Admission` varchar(30) NOT NULL,
+  `NomRecep` varchar(30) NOT NULL,
+  `ClasseMedi` varchar(30) NOT NULL,
+  PRIMARY KEY (`idItem`)
+);
+
+INSERT INTO `receptionequipement` VALUES (1,'aaa','zer','zer21','','ze1r','zer1ze','1212-12-12','zer','zer','ezrzer','zer','ze2r1'),(3,'erar','zer','zer','zere5','ze','z5er1z5re1rez','1221-12-12','ze21r','z12ez','ze5r','zre15','z51');
+
+CREATE TABLE `stockderechange` (
+  `idItem` int NOT NULL AUTO_INCREMENT,
+  `Type` varchar(30) NOT NULL,
+  `Marque` varchar(30) NOT NULL,
+  `Modele` varchar(30) NOT NULL,
+  `Qte` int NOT NULL,
+  `DateAcquisition` date NOT NULL,
+  `NdeSerie` varchar(30) NOT NULL,
+  PRIMARY KEY (`idItem`)
+);
+
+INSERT INTO `stockderechange` VALUES (3,'aaz','a','aa',26,'1212-12-12','15a');
+
+CREATE TABLE `users` (
+  `idUser` int NOT NULL AUTO_INCREMENT,
+  `Email` varchar(30) NOT NULL,
+  `Pwd` varchar(100) NOT NULL,
+  PRIMARY KEY (`idUser`)
+);
+
+INSERT INTO `users` VALUES (1,'aminenaqi@gmail.com','f3029a66c61b61b41b428963a2fc134154a5383096c776f3b4064733c5463d90');
