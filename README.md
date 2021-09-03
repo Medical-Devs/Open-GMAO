@@ -10,10 +10,11 @@ In case you face a javafx error "JavaFX runtime component are missing, and are r
  -  Arguments
  -  And in VM arguments please insert : --module-path "javafx lib PATH that you can find in the 'jars' file" --add-modules javafx.controls,javafx.fxml
 <p align="center">
+ 
 ********************************************************************************************************************
-<p align="center">
 </p>
 
+<p align="center">
   <img src="./readme_Img/welcome_page.PNG"/>
 </p>
 
