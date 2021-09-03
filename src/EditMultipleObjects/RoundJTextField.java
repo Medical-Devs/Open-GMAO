@@ -17,6 +17,7 @@ public class RoundJTextField extends JTextField
 		setOpaque(false);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) 
 	{
 		g.setColor(getBackground());
@@ -31,6 +32,7 @@ public class RoundJTextField extends JTextField
 		super.paintComponent(g);
 	}
 	
+	@Override
 	protected void paintBorder(Graphics g) 
 	{
 		g.setColor(getForeground());
@@ -43,6 +45,7 @@ public class RoundJTextField extends JTextField
 				);
 	}
 	
+	@Override
 	public boolean contains(int x, int y) 
 	{
 		if(shape == null || !shape.getBounds().equals(getBounds())) 

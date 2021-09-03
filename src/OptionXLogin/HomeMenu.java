@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.sql.PreparedStatement;
 import Filters.Help;
@@ -50,6 +51,7 @@ public class HomeMenu extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try
@@ -72,7 +74,7 @@ public class HomeMenu extends JFrame
 		setType(Type.POPUP);
 		setTitle("Home Menu");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -307,7 +309,7 @@ public class HomeMenu extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(
+		con = DriverManager.getConnection(
 				loginInfo.getUrl(), 
 				loginInfo.getUser(), 
 				loginInfo.getPwd()
@@ -318,7 +320,7 @@ public class HomeMenu extends JFrame
 	{
 		Connect();
 		sql = "select Name, FName, Role, userType from gmao.users WHERE idUser = 1;";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		rs = ps.executeQuery();
 		if(rs.next())
 			nameLbl.setText(rs.getString("Name"));

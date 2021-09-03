@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -43,6 +44,7 @@ public class LoginWindow extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -63,7 +65,7 @@ public class LoginWindow extends JFrame
 		setTitle("Login Window");
 		Image img = new ImageIcon(this.getClass().getResource("/Icons/frame.png")).getImage();
 		setIconImage(img);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(0, 0, 690, 435);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -155,7 +157,7 @@ public class LoginWindow extends JFrame
 		Connect();
 		pwdHash = sha256(passwordField.getText());
 		sqlQuery = "SELECT * FROM gmao.users WHERE Email =? AND Pwd= '" + pwdHash + "';";
-		ps = (PreparedStatement) con.prepareStatement(sqlQuery);
+		ps = con.prepareStatement(sqlQuery);
 		ps.setString(1, jt.getText());
 		rs = ps.executeQuery();
 		while(rs.next()) 
@@ -183,7 +185,7 @@ public class LoginWindow extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
     private static String convertByteArrayToHexString(byte[] arrayBytes) 

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -49,6 +50,7 @@ public class ModifyOptionsFrame extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -69,7 +71,7 @@ public class ModifyOptionsFrame extends JFrame
 		setResizable(false);
 		setTitle("Modification Option");
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 753, 504);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -515,7 +517,7 @@ public class ModifyOptionsFrame extends JFrame
 	{
 		Connect();
 		sql = "UPDATE gmao.maintenance SET " + str + "= ? WHERE NdeSerie = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jtxt.getText().trim());
 		ps.setString(2, jts.getText().trim());
 		ps.executeUpdate();
@@ -524,7 +526,7 @@ public class ModifyOptionsFrame extends JFrame
 	protected void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -535,7 +537,7 @@ public class ModifyOptionsFrame extends JFrame
 		boolean existVerif = false;
 		Connect();
 		String sqlVerifEx = "SELECT * FROM gmao.maintenance where NdeSerie = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerifEx);
+		ps = con.prepareStatement(sqlVerifEx);
 		ps.setString(1, jt.getText().trim());
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) 
@@ -571,7 +573,7 @@ public class ModifyOptionsFrame extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next())

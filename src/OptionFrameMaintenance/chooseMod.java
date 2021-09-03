@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 public class chooseMod extends JFrame 
@@ -22,6 +23,7 @@ public class chooseMod extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -42,7 +44,7 @@ public class chooseMod extends JFrame
 		setType(Type.POPUP);
 		setTitle("S\u00E9lection des \u00E9lements");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 775, 451);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();

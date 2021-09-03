@@ -39,6 +39,7 @@ import Filters.Service_Conc;
 import OptionXLogin.HomeMenu;
 import OptionXLogin.loginInfo;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -74,6 +75,7 @@ public class StockRechange extends JFrame implements ActionListener
 	{
 		EventQueue.invokeLater(new Runnable()
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -93,7 +95,7 @@ public class StockRechange extends JFrame implements ActionListener
 	{
 		Image img = new ImageIcon(this.getClass().getResource("/Icons/frame.png")).getImage();
 		setIconImage(img);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
 		setType(Type.POPUP);
 		setTitle("Stock de rechange");
@@ -299,7 +301,7 @@ public class StockRechange extends JFrame implements ActionListener
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	private void Update() throws ClassNotFoundException, SQLException 
@@ -321,7 +323,7 @@ public class StockRechange extends JFrame implements ActionListener
 			table.setAlignmentX(CENTER_ALIGNMENT);
 			table.setAlignmentY(CENTER_ALIGNMENT);
 			centerRenderer = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		
 			for(int y = 0; y < column.length ; y++) 
 			{
@@ -339,7 +341,7 @@ public class StockRechange extends JFrame implements ActionListener
 		try 
 		{
 			Connect();
-			ps = (PreparedStatement) con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			StockRechClasse stockR;
 			while(rs.next()) 

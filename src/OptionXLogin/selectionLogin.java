@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 public class selectionLogin extends JFrame 
@@ -22,6 +23,7 @@ public class selectionLogin extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -43,7 +45,7 @@ public class selectionLogin extends JFrame
 		setTitle("Page d'acceuil");
 		Image img = new ImageIcon(this.getClass().getResource("/Icons/frame.png")).getImage();
 		setIconImage(img);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(100, 100, 690, 435);
 		setLocationRelativeTo(null);
 		setResizable(false);

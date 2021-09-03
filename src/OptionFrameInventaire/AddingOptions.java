@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -42,6 +43,7 @@ public class AddingOptions extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -62,7 +64,7 @@ public class AddingOptions extends JFrame
 		setResizable(false);
 		setType(Type.POPUP);
 		setTitle("Adding Option");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 693, 509);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -220,7 +222,7 @@ public class AddingOptions extends JFrame
 	{
 		Connect();
 		sql = "INSERT INTO gmao.inventaire (Service, Designation, TypeEquipement, Marque, Modele, Quantite, NSerie, NContrat) VALUES(?, ?, ?, ?, ?, ?, ?, ?);";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt1.getText().trim());
 		ps.setString(2, jt2.getText().trim());
 		ps.setString(3, jt3.getText().trim());
@@ -235,7 +237,7 @@ public class AddingOptions extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -265,7 +267,7 @@ public class AddingOptions extends JFrame
 		verifExist = false;
 		Connect();
 		sqlVerif = "SELECT * FROM gmao.inventaire WHERE NSerie = '" + str + "';";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		rs = ps.executeQuery();
 		while(rs.next()) 
 		{
@@ -287,7 +289,7 @@ public class AddingOptions extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) 

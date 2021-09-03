@@ -18,6 +18,7 @@ public class RoundJFormattedTextField extends JFormattedTextField
 		setOpaque(false);
 	}
 	
+	@Override
 	protected void paintComponent(Graphics g) 
 	{
 		g.setColor(getBackground());
@@ -25,12 +26,14 @@ public class RoundJFormattedTextField extends JFormattedTextField
 		super.paintComponent(g);
 	}
 	
+	@Override
 	protected void paintBorder(Graphics g) 
 	{
 		g.setColor(getBackground());
 		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
 	}
 	
+	@Override
 	public boolean contains(int x, int y) 
 	{
 		if(shape == null || !shape.getBounds().equals(getBounds())) 

@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -38,6 +39,7 @@ public class ModifyOptionFrame extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -58,7 +60,7 @@ public class ModifyOptionFrame extends JFrame
 		setType(Type.POPUP);
 		setResizable(false);
 		setTitle("Option de Modification");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 758, 365);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -232,7 +234,7 @@ public class ModifyOptionFrame extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -241,7 +243,7 @@ public class ModifyOptionFrame extends JFrame
 	private void Modify(String str, JTextField jtxt, JTextField jts) throws ClassNotFoundException, SQLException {
 		Connect();
 		sql="UPDATE gmao.plannification SET " + str + "= ? WHERE nSerie = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jtxt.getText().trim());
 		ps.setString(2, jts.getText().trim());
 		ps.executeUpdate();
@@ -254,7 +256,7 @@ public class ModifyOptionFrame extends JFrame
 		boolean verif = false;
 		Connect();
 		String slqVerif = "SELECT * FROM gmao.plannification WHERE nSerie = ?";
-		ps = (PreparedStatement) con.prepareStatement(slqVerif);
+		ps = con.prepareStatement(slqVerif);
 		ps.setString(1, jt.getText().trim());
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
@@ -288,7 +290,7 @@ public class ModifyOptionFrame extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) {

@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import EditMultipleObjects.RoundJButton;
@@ -39,6 +40,7 @@ public class EntrepriseList extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -59,7 +61,7 @@ public class EntrepriseList extends JFrame
 		setResizable(false);
 		setTitle("Option d'insertion d'entreprise");
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 488, 323);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -120,7 +122,7 @@ public class EntrepriseList extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -130,7 +132,7 @@ public class EntrepriseList extends JFrame
 	{
 		Connect();
 		sql = "Insert into gmao.entreprise (Nom) values (?);";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText().trim());
 		ps.executeUpdate();
 		ps.close();

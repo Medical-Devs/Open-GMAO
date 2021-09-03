@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
@@ -39,6 +40,7 @@ public class AddOptionFrame extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable()  
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -59,7 +61,7 @@ public class AddOptionFrame extends JFrame
 		setType(Type.POPUP);
 		setTitle("Option d'addition");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 723, 477);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -191,7 +193,7 @@ public class AddOptionFrame extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd());
 	}
@@ -205,7 +207,7 @@ public class AddOptionFrame extends JFrame
 	{
 		Connect();
 		sql = "INSERT INTO gmao.stockderechange (Type, Marque, Modele, Qte, DateAcquisition, NdeSerie) VALUES (?, ?, ?, ?, ?, ?);";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, typeField.getText().trim());
 		ps.setString(2, mrqField.getText().trim());
 		ps.setString(3, modField.getText().trim());
@@ -224,7 +226,7 @@ public class AddOptionFrame extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) 

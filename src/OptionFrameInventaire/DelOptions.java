@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
@@ -45,6 +46,7 @@ public class DelOptions extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -64,7 +66,7 @@ public class DelOptions extends JFrame
 	{
 		setTitle("Delete Options");
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 652, 307);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -139,7 +141,7 @@ public class DelOptions extends JFrame
 	{
 		Connect();
 		sql = "DELETE FROM gmao.inventaire WHERE NSerie = ?";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText());
 		ps.executeUpdate();
 	}
@@ -147,7 +149,7 @@ public class DelOptions extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -158,7 +160,7 @@ public class DelOptions extends JFrame
 		verifExist = false;
 		Connect();
 		sqlVerif = "SELECT * FROM gmao.inventaire WHERE NSerie = '" + str + "';";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		rs = ps.executeQuery();
 		while(rs.next()) 
 		{
@@ -177,7 +179,7 @@ public class DelOptions extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) 

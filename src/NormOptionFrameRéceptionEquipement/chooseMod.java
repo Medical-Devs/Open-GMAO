@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 public class chooseMod extends JFrame 
@@ -25,6 +26,7 @@ public class chooseMod extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -44,7 +46,7 @@ public class chooseMod extends JFrame
 	{
 		setTitle("S\u00E9l\u00E9ction des \u00E9l\u00E9ments");
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 732, 497);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();

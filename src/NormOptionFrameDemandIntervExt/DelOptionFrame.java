@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -40,6 +41,7 @@ public class DelOptionFrame extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -60,7 +62,7 @@ public class DelOptionFrame extends JFrame
 		setType(Type.POPUP);
 		setTitle("Delete Options");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 556, 303);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -126,7 +128,7 @@ public class DelOptionFrame extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -136,7 +138,7 @@ public class DelOptionFrame extends JFrame
 	{
 		Connect();
 		sql = "DELETE FROM gmao.demandeintexterne WHERE ReferenceDemande = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText().trim());
 		ps.executeUpdate();
 		ps.close();
@@ -147,7 +149,7 @@ public class DelOptionFrame extends JFrame
 		verifEx = false;
 		Connect();
 		sqlVerif = "SELECT * FROM gmao.demandeintexterne WHERE ReferenceDemande = '" + str + "';";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		rs = ps.executeQuery();
 		while(rs.next()) {
 			if(str.trim().equals(rs.getString("ReferenceDemande")) == true) {
@@ -162,7 +164,7 @@ public class DelOptionFrame extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				auto.addItem(rs.getString(str2));

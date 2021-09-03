@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -42,6 +43,7 @@ public class AddOptionFrame extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -61,7 +63,7 @@ public class AddOptionFrame extends JFrame
 	{
 		setType(Type.POPUP);
 		setTitle("Adding Options");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 715, 556);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -227,7 +229,7 @@ public class AddOptionFrame extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	private void Add(JTextField jt1, 
@@ -244,7 +246,7 @@ public class AddOptionFrame extends JFrame
 		Connect();
 		sql = "INSERT INTO gmao.demandeintexterne (TypeAppareil, Service, Marque, Modele, Fournisseur, "
 				+ "NEnregistrement, NSerie, TypeIntervention, ReferenceDemande, Date) VALUES(?,?,?,?,?,?,?,?,?,?);";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1,  jt1.getText().trim());
 		ps.setString(2,  jt2.getText().trim());
 		ps.setString(3,  jt3.getText().trim());
@@ -282,7 +284,7 @@ public class AddOptionFrame extends JFrame
 		verifyExist = false;
 		Connect();
 		sqlVerif = "SELECT * FROM gmao.demandeintexterne WHERE ReferenceDemande = '" + str + "';";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		rs = ps.executeQuery();
 		while(rs.next()) 
 		{
@@ -307,7 +309,7 @@ public class AddOptionFrame extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				auto.addItem(rs.getString(str2));

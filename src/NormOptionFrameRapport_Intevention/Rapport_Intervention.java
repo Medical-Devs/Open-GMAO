@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -74,6 +75,7 @@ public class Rapport_Intervention extends JFrame implements ActionListener
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -96,7 +98,7 @@ public class Rapport_Intervention extends JFrame implements ActionListener
 		setType(Type.POPUP);
 		setResizable(false);
 		setTitle("Rapport d'Intervention");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(0, 0, WindowSize.widthScreen, WindowSize.heightScreen);
 		setExtendedState(MAXIMIZED_BOTH);
 		setResizable(false);
@@ -316,7 +318,7 @@ public class Rapport_Intervention extends JFrame implements ActionListener
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -343,7 +345,7 @@ public class Rapport_Intervention extends JFrame implements ActionListener
 			table.setAlignmentX(CENTER_ALIGNMENT);
 			table.setAlignmentY(CENTER_ALIGNMENT);
 			centerRenderer = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 			for(int y = 0; y < column.length ; y++) 
 			{
 				table.getColumnModel().getColumn(y).setCellRenderer(centerRenderer);
@@ -362,7 +364,7 @@ public class Rapport_Intervention extends JFrame implements ActionListener
 		try 
 		{
 			Connect();
-			ps = (PreparedStatement) con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			RapportIntClasse rapC;
 			while(rs.next()) 

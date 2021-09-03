@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -39,6 +40,7 @@ public class DelOptionFrame extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -60,7 +62,7 @@ public class DelOptionFrame extends JFrame
 		setTitle("Option de suppression");
 		setResizable(false);
 		setBounds(100, 100, 450, 300);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);
@@ -125,14 +127,14 @@ public class DelOptionFrame extends JFrame
 	protected void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	protected void Delete(JTextField jt) throws ClassNotFoundException, SQLException 
 	{
 		Connect();
 		sql= "DELETE FROM gmao.maintenance WHERE NdeSerie = ?";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText().trim());
 		ps.executeUpdate();
 	}
@@ -142,7 +144,7 @@ public class DelOptionFrame extends JFrame
 		boolean verifExist = false;
 		Connect();
 		sqlVerif = "select * from gmao.maintenance where NdeSerie = '" + str + "';";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		rs = ps.executeQuery();
 		while(rs.next()) 
 		{
@@ -164,7 +166,7 @@ public class DelOptionFrame extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) {

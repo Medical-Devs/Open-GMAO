@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -48,6 +49,7 @@ public class ModificationOption extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -68,7 +70,7 @@ public class ModificationOption extends JFrame
 		setResizable(false);
 		setType(Type.POPUP);
 		setTitle("Modification Options");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 695, 533);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -300,7 +302,7 @@ public class ModificationOption extends JFrame
 	private void Modifier(String str, JTextField jtxt, JTextField jts) throws ClassNotFoundException, SQLException {
 		Connect();
 		sql = "UPDATE gmao.inventaire SET "+ str + " = ? WHERE NSerie = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jtxt.getText());
 		ps.setString(2, jts.getText());
 		ps.executeUpdate();
@@ -313,7 +315,7 @@ public class ModificationOption extends JFrame
 		boolean verif = false;
 		Connect();
 		String sqlVerif = "SELECT * from gmao.inventaire where NSerie = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		ps.setString(1, jt.getText().trim());
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) 
@@ -345,7 +347,7 @@ public class ModificationOption extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -358,7 +360,7 @@ public class ModificationOption extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) 

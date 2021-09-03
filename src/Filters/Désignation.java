@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import EditMultipleObjects.RoundJButton;
 import EditMultipleObjects.RoundJTextField;
@@ -38,6 +39,7 @@ public class Désignation extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -58,7 +60,7 @@ public class Désignation extends JFrame
 	{
 		setTitle("Option d'insertion de d\u00E9signation");
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 542, 384);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -125,7 +127,7 @@ public class Désignation extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -135,7 +137,7 @@ public class Désignation extends JFrame
 	{
 		Connect();
 		String sql = "INSERT INTO gmao.designation (des) values(?);";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText().trim());
 		ps.executeUpdate();
 		con.close();

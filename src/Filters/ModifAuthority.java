@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.sql.PreparedStatement;
 import EditMultipleObjects.WindowSize;
@@ -37,6 +38,7 @@ public class ModifAuthority extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -55,7 +57,7 @@ public class ModifAuthority extends JFrame
 	public ModifAuthority() 
 	{
 		setTitle("Modification de l'authorit\u00E9");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		setBounds(WindowSize.widthScreen / 2 - width / 2 , 
 				  WindowSize.heightScreen / 2 - height / 2 , 
@@ -115,7 +117,7 @@ public class ModifAuthority extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -135,7 +137,7 @@ public class ModifAuthority extends JFrame
 		}
 		
 		sql = "Update gmao.users Set userType = '" + str + "' Where Name = '" + jt.getText().trim() + "';";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.executeUpdate();
 		con.close();
 		ps.close();

@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -48,6 +49,7 @@ public class Registration extends JFrame {
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -68,7 +70,7 @@ public class Registration extends JFrame {
 		setType(Type.POPUP);
 		setResizable(false);
 		setTitle("Page d'enregistrement");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(0, 0, 690, 666);
 		Image img = new ImageIcon(this.getClass().getResource("/Icons/frame.png")).getImage();
 		setIconImage(img);
@@ -176,7 +178,7 @@ public class Registration extends JFrame {
 	protected void Connect() throws ClassNotFoundException, SQLException
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -185,7 +187,7 @@ public class Registration extends JFrame {
 		Connect();
 		pwdHash = sha256(passwordField.getText()); 
 		sql = "INSERT INTO gmao.users (Email, Pwd, Name, FName, Role) Values (?, '" + pwdHash + "', ?, ?, ?);";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText().trim());
 		ps.setString(2, jt2.getText());
 		ps.setString(3, jt3.getText());

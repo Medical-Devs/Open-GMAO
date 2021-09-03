@@ -73,6 +73,7 @@ public class Inventaire extends JFrame implements ActionListener
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -298,7 +299,7 @@ public class Inventaire extends JFrame implements ActionListener
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 
+		con = DriverManager.getConnection(loginInfo.getUrl(), 
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd());
 	}
@@ -323,7 +324,7 @@ public class Inventaire extends JFrame implements ActionListener
 			table.setAlignmentX(CENTER_ALIGNMENT);
 			table.setAlignmentY(CENTER_ALIGNMENT);
 			centerRenderer = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 			for(int y = 0; y < column.length ; y++) 
 			{
 				table.getColumnModel().getColumn(y).setCellRenderer(centerRenderer);
@@ -339,7 +340,7 @@ public class Inventaire extends JFrame implements ActionListener
 		sql = "SELECT idItem, Service, Designation, TypeEquipement, Marque, Modele, Quantite, NSerie, NContrat FROM gmao.inventaire;";
 			try {
 				Connect();
-				ps = (PreparedStatement) con.prepareStatement(sql);
+				ps = con.prepareStatement(sql);
 				rs = ps.executeQuery();
 				InventaireClasse inv;
 				while(rs.next()) 

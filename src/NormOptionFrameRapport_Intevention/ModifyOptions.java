@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -38,6 +39,7 @@ public class ModifyOptions extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -58,7 +60,7 @@ public class ModifyOptions extends JFrame
 		setTitle("Modifying Options");
 		setResizable(false);
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 792, 440);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -294,13 +296,13 @@ public class ModifyOptions extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	private void Modify(String str, JTextField jt, JTextField jts) throws ClassNotFoundException, SQLException {
 		Connect();
 		sql = "UPDATE gmao.rapport_intervention SET " + str + " = ? WHERE Reference_Rapport = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText());
 		ps.setString(2, jts.getText());
 		ps.executeUpdate();
@@ -313,7 +315,7 @@ public class ModifyOptions extends JFrame
 		Connect();
 		boolean verif = false;
 		String sqlVerifEx = "SELECT * FROM gmao.rapport_intervention where Reference_Rapport = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerifEx);
+		ps = con.prepareStatement(sqlVerifEx);
 		ps.setString(1, jt.getText().trim());
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) 
@@ -349,7 +351,7 @@ public class ModifyOptions extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) {

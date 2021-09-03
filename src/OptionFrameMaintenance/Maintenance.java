@@ -23,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -73,6 +74,7 @@ public class Maintenance extends JFrame implements ActionListener
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -95,7 +97,7 @@ public class Maintenance extends JFrame implements ActionListener
 		setType(Type.POPUP);
 		setTitle("Maintenance");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setBounds(0, 0, WindowSize.widthScreen, WindowSize.heightScreen);
 		setExtendedState(MAXIMIZED_BOTH);
 		setResizable(false);
@@ -311,7 +313,7 @@ public class Maintenance extends JFrame implements ActionListener
 		try 
 		{
 			Connect();
-			ps = (PreparedStatement) con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			MaintenanceClasse mainC;
 			while(rs.next()) 
@@ -355,7 +357,7 @@ public class Maintenance extends JFrame implements ActionListener
 			table.setAlignmentX(CENTER_ALIGNMENT);
 			table.setAlignmentY(CENTER_ALIGNMENT);
 			centerRenderer = new DefaultTableCellRenderer();
-			centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 			for(int y = 0; y < column.length ; y++) 
 			{
 				table.getColumnModel().getColumn(y).setCellRenderer(centerRenderer);
@@ -368,7 +370,7 @@ public class Maintenance extends JFrame implements ActionListener
 	protected void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	@Override

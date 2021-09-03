@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -41,6 +42,7 @@ public class AddingOptions extends JFrame {
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -61,7 +63,7 @@ public class AddingOptions extends JFrame {
 		setTitle("Adding Options");
 		setResizable(false);
 		setType(Type.POPUP);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 773, 475);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -206,7 +208,7 @@ public class AddingOptions extends JFrame {
 	protected void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	
@@ -223,7 +225,7 @@ public class AddingOptions extends JFrame {
 		Connect();
 		sql = "INSERT INTO gmao.rapport_intervention (Service, Designation, TypeAppareil, "
 				+ "Marque, Modele, NInventaire, NSerie, Date_Intervention, Reference_Rapport) VALUES (?,?,?,?,?,?,?,?,?)";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt1.getText().trim());
 		ps.setString(2, jt2.getText().trim());
 		ps.setString(3, jt3.getText().trim());
@@ -259,7 +261,7 @@ public class AddingOptions extends JFrame {
 		verifExist = false;
 		Connect();
 		sqlVerif = "SELECT * FROM gmao.rapport_intervention WHERE Reference_Rapport = '" + str + "';";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		rs = ps.executeQuery();
 		while(rs.next()) {
 			if(str.trim().equals(rs.getString("Reference_Rapport")) == true) 
@@ -277,7 +279,7 @@ public class AddingOptions extends JFrame {
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) 

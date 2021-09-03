@@ -17,6 +17,7 @@ public class RoundJButton extends JButton
 		setOpaque(false);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g) 
 	{
 		g.setColor(getBackground());
@@ -31,6 +32,7 @@ public class RoundJButton extends JButton
 		super.paintComponent(g);
 	}
 	
+	@Override
 	protected void paintBorder(Graphics g) 
 	{
 		g.setColor(getForeground());
@@ -43,6 +45,7 @@ public class RoundJButton extends JButton
 						);
 	}
 	
+	@Override
 	public boolean contains(int x, int y) 
 	{
 		if(shape == null || !shape.getBounds().equals(getBounds())) 

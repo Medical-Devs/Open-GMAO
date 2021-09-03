@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import EditMultipleObjects.RoundJButton;
 import EditMultipleObjects.WindowSize;
@@ -24,6 +25,7 @@ public class Help extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -43,7 +45,7 @@ public class Help extends JFrame
 	{
 		setResizable(false);
 		setTitle("Help");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
 		setBounds(WindowSize.widthScreen / 2 - windowWidth / 2, 
 				  WindowSize.heightScreen / 2 - windowHeight / 2, 

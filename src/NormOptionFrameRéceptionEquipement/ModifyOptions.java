@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJTextField;
@@ -39,6 +40,7 @@ public class ModifyOptions extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -56,7 +58,7 @@ public class ModifyOptions extends JFrame
 	
 	public ModifyOptions() 
 	{
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 710, 542);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -344,7 +346,7 @@ public class ModifyOptions extends JFrame
 	private void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), 	
+		con = DriverManager.getConnection(loginInfo.getUrl(), 	
 													   loginInfo.getUser(), 
 													   loginInfo.getPwd()
 													   );
@@ -354,7 +356,7 @@ public class ModifyOptions extends JFrame
 	{
 		Connect();
 		sql = "UPDATE gmao.receptionequipement SET " + str + "= ? WHERE NSerie = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 		ps.setString(1, jt.getText().trim());
 		ps.setString(2, jts.getText().trim());
 		ps.executeUpdate();
@@ -367,7 +369,7 @@ public class ModifyOptions extends JFrame
 		boolean verif = false;
 		Connect();
 		String sqlVerif = "SELECT * FROM gmao.receptionequipement WHERE NSerie = ?;";
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		ps.setString(1, jt.getText().trim());
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
@@ -401,7 +403,7 @@ public class ModifyOptions extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) 

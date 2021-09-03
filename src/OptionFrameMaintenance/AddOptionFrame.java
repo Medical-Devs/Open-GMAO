@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import EditMultipleObjects.RoundJButton;
@@ -43,6 +44,7 @@ public class AddOptionFrame extends JFrame
 	{
 		EventQueue.invokeLater(new Runnable() 
 		{
+			@Override
 			public void run() 
 			{
 				try 
@@ -63,7 +65,7 @@ public class AddOptionFrame extends JFrame
 		setType(Type.POPUP);
 		setTitle("Adding Options");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 648, 477);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -363,7 +365,7 @@ public class AddOptionFrame extends JFrame
 	protected void Connect() throws ClassNotFoundException, SQLException 
 	{
 		Class.forName("com.mysql.jdbc.Driver");
-		con = (Connection) DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
+		con = DriverManager.getConnection(loginInfo.getUrl(), loginInfo.getUser(), loginInfo.getPwd());
 	}
 	
 	protected void Ajouter(JTextField jt01, 
@@ -385,7 +387,7 @@ public class AddOptionFrame extends JFrame
 				                          + "DatePrevu, Date_Intervention, Decalage_Intervention, Duree_Intervention, "
 			                           	  + "Montant_Intervention) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);";
 
-		ps= (PreparedStatement) con.prepareStatement(sql);
+		ps= con.prepareStatement(sql);
 		ps.setString(1, jt01.getText().trim());
 		ps.setString(2, jt02.getText().trim());
 		ps.setString(3, jt03.getText().trim());
@@ -429,7 +431,7 @@ public class AddOptionFrame extends JFrame
 		boolean verifExist = false;
 		sqlVerif = "SELECT * FROM gmao.maintenance WHERE NdeSerie = '" + str + "';";
 		Connect();
-		ps = (PreparedStatement) con.prepareStatement(sqlVerif);
+		ps = con.prepareStatement(sqlVerif);
 		rs = ps.executeQuery();
 		while(rs.next()) {
 			if(str.trim().equals(rs.getString("NdeSerie")) == true) 
@@ -447,7 +449,7 @@ public class AddOptionFrame extends JFrame
 			Connect();
 			TextAutoCompleter auto = new TextAutoCompleter(jt);
 			String sqlAuto = str1;
-			ps = (PreparedStatement) con.prepareStatement(sqlAuto);
+			ps = con.prepareStatement(sqlAuto);
 			ResultSet rs;
 			rs = ps.executeQuery();
 			while(rs.next()) {
