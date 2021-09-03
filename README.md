@@ -1,5 +1,6 @@
+<p align="center"> Before compiling </p>
 <p align="center">
- *************************************************** Before compiling **********************************************
+ *************************************************************************************************
 </p>
 
 Please make sure to have mysql server installed and running, as well as the database tables compiled in your mysql server in order to get 
