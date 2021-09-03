@@ -1,4 +1,6 @@
-/************************************************ Before compiling *******************************************/
+<p align="center">
+ /************************************************ Before compiling *******************************************/
+</p>
 
 Please make sure to have mysql server installed and running, as well as the database tables compiled in your mysql server in order to get 
 the full experience !!
@@ -7,9 +9,11 @@ In case you face a javafx error "JavaFX runtime component are missing, and are r
  -  Go to Run configurations
  -  Arguments
  -  And in VM arguments please insert : --module-path "javafx lib PATH that you can find in the 'jars' file" --add-modules javafx.controls,javafx.fxml
-
+<p align="center">
 /*************************************************************************************************************/
 <p align="center">
+</p>
+
   <img src="./readme_Img/welcome_page.PNG"/>
 </p>
 
