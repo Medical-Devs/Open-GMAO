@@ -19,7 +19,10 @@ In case you face a javafx error "JavaFX runtime component are missing, and are r
 <p align="center">
   <img src="./readme_Img/welcome_page.PNG"/>
 </p>
-
+<p align="center">
+ 
+********************************************************************************************************************
+</p>
 This project is a basic demonstration of CMMS (Computer Maintenance Management System) that can be used 
 in a Hospital environnement.
 It was made with mysql as well as apache poi and "sferyx" api for .docx files (insertion/addition/modification).
@@ -27,7 +30,10 @@ It was made with mysql as well as apache poi and "sferyx" api for .docx files (i
 Note that the usability of the sferyx api is limited to a usability that ends after a month (Test version).
 
 Enjoy the program.
-
+<p align="center">
+ 
+********************************************************************************************************************
+</p>
 <p align="center">
   
   <img src="./readme_Img/Login.PNG"/>
